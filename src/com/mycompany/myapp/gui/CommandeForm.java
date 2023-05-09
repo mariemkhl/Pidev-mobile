@@ -24,48 +24,45 @@ import com.codename1.ui.Dialog;
 import com.codename1.ui.FontImage;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.FlowLayout;
-import com.mycompany.myapp.entities.Reclamation;
-import com.mycompany.myapp.gui.SplashForm;
-import com.mycompany.myapp.services.ServiceReclamation;
+import com.mycompany.myapp.entities.Commande;
+import com.mycompany.myapp.services.ServiceCommande;
 import java.util.List;
 
+
 /**
- * GUI builder created Form
+ * A simple details form
  *
  * @author Shai Almog
- */public class recForm extends BaseForm {
+ */
+public class CommandeForm extends BaseForm {
+    
+    private ServiceCommande ServiceCommande;
 
-    Reclamation r = new Reclamation();
-    private ServiceReclamation ServiceReclamation;
-
-
-    public recForm(com.codename1.ui.util.Resources resourceObjectInstance) {
-  ServiceReclamation = ServiceReclamation.getInstance();
+    public CommandeForm() {
+        this(com.codename1.ui.util.Resources.getGlobalResources());
+    }
+    
+    public CommandeForm(com.codename1.ui.util.Resources resourceObjectInstance) {
+     ServiceCommande = ServiceCommande.getInstance();
         initGuiBuilderComponents(resourceObjectInstance);
         getTitleArea().setUIID("Container");
         getToolbar().setUIID("Container");
-        getToolbar().getTitleComponent().setUIID("reclamation");
-        FontImage mat = FontImage.createMaterial(FontImage.MATERIAL_CLOSE, "reclamation", 3.5f);
+        getToolbar().getTitleComponent().setUIID("commander");
+        FontImage mat = FontImage.createMaterial(FontImage.MATERIAL_CLOSE, "commander", 3.5f);
         getToolbar().addCommandToLeftBar("", mat, e -> new SplashForm().show());
-        getContentPane().setUIID("reclamation");
-        
+        getContentPane().setUIID("commander");
     }
-
-
 
 //-- DON'T EDIT BELOW THIS LINE!!!
     private com.codename1.ui.Container gui_Container_1 = new com.codename1.ui.Container(new com.codename1.ui.layouts.BoxLayout(com.codename1.ui.layouts.BoxLayout.Y_AXIS));
     private com.codename1.ui.Label gui_Label_1 = new com.codename1.ui.Label();
     private com.codename1.ui.ComponentGroup gui_Component_Group_1 = new com.codename1.ui.ComponentGroup();
-    public com.codename1.ui.TextField commentaire = new com.codename1.ui.TextField();
-    public com.codename1.ui.TextField typeReclamation = new com.codename1.ui.TextField();
-    private com.codename1.ui.Button valider = new com.codename1.ui.Button();
-    private com.codename1.ui.Button confirmation = new com.codename1.ui.Button();
-// <editor-fold defaultstate="collapsed" desc="Generated Code">                          
+    public com.codename1.ui.TextField payment = new com.codename1.ui.TextField();
+    public com.codename1.ui.TextField prixTot = new com.codename1.ui.TextField();
 
-    recForm() {
-    }
-   
+    private com.codename1.ui.Button valider = new com.codename1.ui.Button();
+        private com.codename1.ui.Button payer = new com.codename1.ui.Button();
+
 // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void guiBuilderBindComponentListeners() {
         EventCallbackClass callback = new EventCallbackClass();
@@ -103,8 +100,8 @@ private void initGuiBuilderComponents(com.codename1.ui.util.Resources resourceOb
 
     guiBuilderBindComponentListeners();
     setLayout(new com.codename1.ui.layouts.BorderLayout());
-    setTitle("ajouter une réclamation");
-    setName("ajouter une réclamation");
+    setTitle("passer une commande");
+    setName("passer une commande");
     addComponent(com.codename1.ui.layouts.BorderLayout.CENTER, gui_Container_1);
     gui_Container_1.setScrollableY(true);
     gui_Container_1.setName("Container_1");
@@ -117,8 +114,8 @@ private void initGuiBuilderComponents(com.codename1.ui.util.Resources resourceOb
     Container fieldsContainer = new Container(new FlowLayout(Component.CENTER));
     fieldsContainer.setName("Fields_Container");
 
-    fieldsContainer.addComponent(commentaire);
-    fieldsContainer.addComponent(typeReclamation);
+    fieldsContainer.addComponent(payment);
+    fieldsContainer.addComponent(prixTot);
 
     // Add the fields container to the main container
     gui_Container_1.addComponent(fieldsContainer);
@@ -128,45 +125,46 @@ private void initGuiBuilderComponents(com.codename1.ui.util.Resources resourceOb
     buttonContainer.setName("Button_Container");
 
     buttonContainer.addComponent(valider);
-     buttonContainer.addComponent(confirmation);
+     buttonContainer.addComponent(payer);
 
     // Add the button container to the main container
     gui_Container_1.addComponent(buttonContainer);
 
-    commentaire.setText("commentaire");
-    typeReclamation.setText("typeReclamation");
-
+    payment.setText("payment");  
+    prixTot.setText("prixTot");
     gui_Label_1.setUIID("CenterLabel");
     gui_Label_1.setName("Label_1");
-    valider.setText("ajouter votre réclamation");
-    confirmation.setText("cliquez ici pour la confirmation");
-
+    valider.setText("ajouter la commande");
+    payer.setText("passer au paiment");
 }
  // </editor-fold> // </editor-fold>
 
     public void validerActionEvent(com.codename1.ui.events.ActionEvent ev) {
-        Reclamation r = new Reclamation();
-        r.setCommentaire(commentaire.getText());
-        r.setTypereclamation(typeReclamation.getText());
+        Commande r = new Commande();
+        r.setPrixTot(Integer.parseInt(prixTot.getText()));
+        r.setPayment(payment.getText());
+         
 
-             
-
-        if (ServiceReclamation.addReclamation(r)) {
-            Dialog.show("Success", "reclamation a été effectué", "OK", null);
+        if (ServiceCommande.addCommande(r)) {
+            Dialog.show("Success", "la commande a été bien ajoutée", "OK", null);
 
        
         } else {
-            Dialog.show("Error", "Failed to add reclamation", "OK", null);
+            Dialog.show("Error", "Erreur", "OK", null);
         }
 
     }
-        public void confirmationActionEvent(com.codename1.ui.events.ActionEvent ev) {
-    conf_reclamation conf_reclamation = new conf_reclamation();
-              conf_reclamation.show();
-          }
+    
+        public void payerActionEvent(com.codename1.ui.events.ActionEvent ev) {
+    checkoutForm checkoutForm = new checkoutForm();
+              checkoutForm.show();
+
     }
 
 //-- DON'T EDIT ABOVE THIS LINE!!!
 //    public void onButton_2ActionEvent(com.codename1.ui.events.ActionEvent ev) {
 //        new InboxForm().show();
 //    }
+}
+
+

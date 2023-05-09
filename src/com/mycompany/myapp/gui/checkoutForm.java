@@ -5,23 +5,10 @@
  */
 package com.mycompany.myapp.gui;
 
-import com.codename1.l10n.ParseException;
-
-import com.codename1.ui.Button;
-import com.codename1.ui.CheckBox;
-import com.codename1.ui.ComboBox;
-import com.codename1.ui.Command;
 import com.codename1.ui.Component;
 import com.codename1.ui.Container;
 import com.codename1.ui.Dialog;
-import com.codename1.ui.Display;
 import com.codename1.ui.FontImage;
-import com.codename1.ui.Form;
-import com.codename1.ui.Label;
-import com.codename1.ui.TextField;
-import com.codename1.ui.events.ActionEvent;
-import com.codename1.ui.events.ActionListener;
-import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.FlowLayout;
 import com.mycompany.myapp.entities.Paiment;
@@ -38,30 +25,18 @@ private ServicePaiment ServicePaiment;
 
 
     public checkoutForm(com.codename1.ui.util.Resources resourceObjectInstance) {
-        
-         initGuiBuilderComponents(resourceObjectInstance);
-        setLayout(BoxLayout.y());
-        setScrollableY(true);
-        getContentPane().setScrollVisible(false);
-        getToolbar().setUIID("Container");
-        Button b = new Button(" ");
-        b.setUIID("Container");
-        getToolbar().setTitleComponent(b);
-        getTitleArea().setUIID("Container");
-        installSidemenu(resourceObjectInstance);
-        ServicePaiment = ServicePaiment.getInstance();
+
+ServicePaiment = ServicePaiment.getInstance();
         initGuiBuilderComponents(resourceObjectInstance);
         getTitleArea().setUIID("Container");
         getToolbar().setUIID("Container");
         getToolbar().getTitleComponent().setUIID("Payer");
-        FontImage mat = FontImage.createMaterial(FontImage.MATERIAL_CLOSE, "Payer", 3.5f);
+        FontImage mat = FontImage.createMaterial(FontImage.MATERIAL_CLOSE, "payer", 3.5f);
         getToolbar().addCommandToLeftBar("", mat, e -> new SplashForm().show());
-        getContentPane().setUIID("Payer");
+        getContentPane().setUIID("payer");
+        
 
     }
-
-
-
 //-- DON'T EDIT BELOW THIS LINE!!!
     private com.codename1.ui.Container gui_Container_1 = new com.codename1.ui.Container(new com.codename1.ui.layouts.BoxLayout(com.codename1.ui.layouts.BoxLayout.Y_AXIS));
     private com.codename1.ui.Label gui_Label_1 = new com.codename1.ui.Label();

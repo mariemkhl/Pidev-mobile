@@ -32,6 +32,17 @@ public class Commande {
         this.payment = payment;
         this.date = date;
     }
+                public Commande( float prixTot, String userid, String payment) {
+        this.prixTot = prixTot;
+        this.userid = userid;
+        this.payment = payment;
+
+    }
+        
+              public Commande( float prixTot, String payment) {
+        this.prixTot = prixTot;
+        this.payment = payment;
+    }
         
         public Commande( float prixTot) {
         this.prixTot = prixTot;

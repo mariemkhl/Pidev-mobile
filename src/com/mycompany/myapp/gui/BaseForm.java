@@ -24,7 +24,6 @@ import com.codename1.ui.Container;
 import com.codename1.ui.Form;
 import com.codename1.ui.Image;
 import com.codename1.ui.Label;
-import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.FlowLayout;
 import com.codename1.ui.util.Resources;
 
@@ -60,7 +59,7 @@ public class BaseForm extends Form {
         getToolbar().addComponentToSideMenu(inbox);
         
         getToolbar().addCommandToSideMenu("Stats", null, e -> new StatsForm(res).show());
-        getToolbar().addCommandToSideMenu("paiment", null, e -> new checkoutForm(res).show());
+        getToolbar().addCommandToSideMenu("Paiment", null, e -> new checkoutForm(res).show());
         getToolbar().addCommandToSideMenu("Map", null, e -> {});
         getToolbar().addCommandToSideMenu("Reclamation", null, e -> new recForm(res).show());
         getToolbar().addCommandToSideMenu("Settings", null, e -> {});

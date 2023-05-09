@@ -35,21 +35,14 @@ public class conf_reclamation extends BaseForm {
 
 
     public conf_reclamation(com.codename1.ui.util.Resources resourceObjectInstance) {
-   
- initGuiBuilderComponents(resourceObjectInstance);
-        setLayout(BoxLayout.y());
-        setScrollableY(true);
-        getContentPane().setScrollVisible(false);
-        getToolbar().setUIID("Container");
-        Button b = new Button(" ");
-        b.setUIID("Container");
-        getToolbar().setTitleComponent(b);
+
+        initGuiBuilderComponents(resourceObjectInstance);
         getTitleArea().setUIID("Container");
-        installSidemenu(resourceObjectInstance);
-        getToolbar().getTitleComponent().setUIID("Recevoir une notification");
-        FontImage mat = FontImage.createMaterial(FontImage.MATERIAL_CLOSE, "Recevoir une notification", 3.5f);
+        getToolbar().setUIID("Container");
+        getToolbar().getTitleComponent().setUIID("Payer");
+        FontImage mat = FontImage.createMaterial(FontImage.MATERIAL_CLOSE, "AddFormTitle", 3.5f);
         getToolbar().addCommandToLeftBar("", mat, e -> new SplashForm().show());
-        getContentPane().setUIID("");
+        getContentPane().setUIID("AddProduct");
     }
 
 
@@ -69,9 +62,6 @@ public class conf_reclamation extends BaseForm {
         
     }
 
-
-   
-    
 
 // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void guiBuilderBindComponentListeners() {
