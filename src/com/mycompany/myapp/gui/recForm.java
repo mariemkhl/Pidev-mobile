@@ -18,14 +18,13 @@
  */
 package com.mycompany.myapp.gui;
 
+import com.codename1.ui.Button;
 import com.codename1.ui.Container;
 import com.codename1.ui.Dialog;
-import com.codename1.ui.Display;
 import com.codename1.ui.FontImage;
 import com.codename1.ui.layouts.BoxLayout;
 import com.mycompany.myapp.entities.Reclamation;
 import com.mycompany.myapp.gui.SplashForm;
-import com.mycompany.myapp.services.ServiceReclamation;
 import com.mycompany.myapp.services.ServiceReclamation;
 import java.util.List;
 
@@ -34,7 +33,7 @@ import java.util.List;
  *
  * @author Shai Almog
  */
-public class recForm extends com.codename1.ui.Form {
+public class recForm extends BaseForm {
 private ServiceReclamation ServiceReclamation;
   
     private Container imageContainer;
@@ -42,14 +41,26 @@ private ServiceReclamation ServiceReclamation;
 
 
     public recForm(com.codename1.ui.util.Resources resourceObjectInstance) {
+         initGuiBuilderComponents(resourceObjectInstance);
+        setLayout(BoxLayout.y());
+        setScrollableY(true);
+        getContentPane().setScrollVisible(false);
+        getToolbar().setUIID("Container");
+        Button b = new Button(" ");
+        b.setUIID("Container");
+        getToolbar().setTitleComponent(b);
+        getTitleArea().setUIID("Container");
+        installSidemenu(resourceObjectInstance);
         ServiceReclamation = ServiceReclamation.getInstance();
         initGuiBuilderComponents(resourceObjectInstance);
         getTitleArea().setUIID("Container");
         getToolbar().setUIID("Container");
-        getToolbar().getTitleComponent().setUIID("AddFormTitle");
-        FontImage mat = FontImage.createMaterial(FontImage.MATERIAL_CLOSE, "AddFormTitle", 3.5f);
+        getToolbar().getTitleComponent().setUIID("Ajouter une réclamation");
+        FontImage mat = FontImage.createMaterial(FontImage.MATERIAL_CLOSE, "Ajouter une réclamation", 3.5f);
         getToolbar().addCommandToLeftBar("", mat, e -> new SplashForm().show());
-        getContentPane().setUIID("Ajouter une réclamation");
+        getContentPane().setUIID("");
+        
+        Recevoir_une_confirmation.addActionListener(e -> recevoirUneConfirmationActionEvent());
 
     }
 
@@ -61,8 +72,12 @@ private ServiceReclamation ServiceReclamation;
     private com.codename1.ui.ComponentGroup gui_Component_Group_1 = new com.codename1.ui.ComponentGroup();
     private com.codename1.ui.TextField Commentaire = new com.codename1.ui.TextField();
     private com.codename1.ui.TextField typeReclamation = new com.codename1.ui.TextField();
-//    private com.codename1.ui.TextField dateachatField = new com.codename1.ui.TextField();
     private com.codename1.ui.Button valider = new com.codename1.ui.Button();
+    private com.codename1.ui.Button Recevoir_une_confirmation = new com.codename1.ui.Button();
+
+    recForm() {
+      
+    }
     
 
 // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
@@ -82,6 +97,7 @@ private ServiceReclamation ServiceReclamation;
         public EventCallbackClass() {
         }
 
+        @Override
         public void actionPerformed(com.codename1.ui.events.ActionEvent ev) {
             com.codename1.ui.Component sourceComponent = ev.getComponent();
             if (sourceComponent.getParent().getLeadParent() != null) {
@@ -93,6 +109,7 @@ private ServiceReclamation ServiceReclamation;
             }
         }
 
+        @Override
         public void dataChanged(int type, int index) {
         }
     }
@@ -127,8 +144,12 @@ private ServiceReclamation ServiceReclamation;
         gui_Label_1.setUIID("CenterLabel");
         gui_Label_1.setName("Label_1");
         gui_Component_Group_1.setName("Component_Group_1");
-         valider.setText("ADD ");
+         valider.setText("Valider ");
         gui_Container_1.addComponent(valider);
+        
+         Recevoir_une_confirmation.setText("Recevoir_une_confirmation ");
+        gui_Container_1.addComponent(Recevoir_une_confirmation);
+        
 
     } // </editor-fold> // </editor-fold>
 
@@ -146,6 +167,11 @@ private ServiceReclamation ServiceReclamation;
         }
 
     }
+        public void recevoirUneConfirmationActionEvent() {
+            
+            conf_reclamation conf_reclamation = new conf_reclamation();
+              conf_reclamation.show();
+          }
 
 //-- DON'T EDIT ABOVE THIS LINE!!!
 //    public void onButton_2ActionEvent(com.codename1.ui.events.ActionEvent ev) {

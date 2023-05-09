@@ -59,10 +59,10 @@ public class BaseForm extends Form {
         inboxButton.addActionListener(e -> new InboxForm().show());
         getToolbar().addComponentToSideMenu(inbox);
         
-        getToolbar().addCommandToSideMenu("Stats", statsImage, e -> new StatsForm(res).show());
-        getToolbar().addCommandToSideMenu("Calendar", calendarImage, e -> new CalendarForm(res).show());
+        getToolbar().addCommandToSideMenu("Stats", null, e -> new StatsForm(res).show());
+        getToolbar().addCommandToSideMenu("paiment", null, e -> new checkoutForm(res).show());
         getToolbar().addCommandToSideMenu("Map", null, e -> {});
-        getToolbar().addCommandToSideMenu("Reclamation", trendingImage, e -> new recForm(res).show());
+        getToolbar().addCommandToSideMenu("Reclamation", null, e -> new recForm(res).show());
         getToolbar().addCommandToSideMenu("Settings", null, e -> {});
         
         // spacer

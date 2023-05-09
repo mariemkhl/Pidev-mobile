@@ -43,7 +43,7 @@ public class ServiceReclamation {
     public boolean addReclamation(Reclamation reclamation) {
 //         String nom = product.getNom();
       
-        String url = Statics.BASE_URL + "/reclamationmobile/new/?commentaire=" + reclamation.getCommentaire() + "&typereclamation=" + reclamation.getTypereclamation();
+        String url = Statics.BASE_URL + "/reclamationmobile/new/?commentaire=" + reclamation.getCommentaire() + "&typeReclamation=" + reclamation.getTypereclamation();
         req.setUrl(url);
         req.setPost(false);
 
@@ -114,12 +114,12 @@ public ArrayList<Reclamation> parseReclamation(String jsonText) {
                        float numero = Float.parseFloat(obj.get("numero").toString());
                         
                         String commentaire = obj.get("commentaire").toString();
-                        String typereclamation = obj.get("typereclamation").toString();
+                        String typeReclamation = obj.get("typeReclamation").toString();
                         
                         
                        re.setNumero((int)numero);
                         re.setCommentaire(commentaire);
-                        re.setTypereclamation(typereclamation);
+                        re.setTypereclamation(typeReclamation);
                        
                      
                         

@@ -6,7 +6,7 @@
 package com.mycompany.myapp.gui;
 
 import com.codename1.l10n.ParseException;
-import com.codename1.l10n.SimpleDateFormat;
+
 import com.codename1.ui.Button;
 import com.codename1.ui.CheckBox;
 import com.codename1.ui.ComboBox;
@@ -23,28 +23,40 @@ import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
+import com.codename1.ui.layouts.FlowLayout;
 import com.mycompany.myapp.entities.Paiment;
 import com.mycompany.myapp.services.ServicePaiment;
-import java.util.Date;
+
 import java.util.List;
 
 /**
  *
  * @author bhk
  */
-public class checkoutForm extends com.codename1.ui.Form {
+public class checkoutForm extends BaseForm {
 private ServicePaiment ServicePaiment;
 
 
     public checkoutForm(com.codename1.ui.util.Resources resourceObjectInstance) {
+        
+         initGuiBuilderComponents(resourceObjectInstance);
+        setLayout(BoxLayout.y());
+        setScrollableY(true);
+        getContentPane().setScrollVisible(false);
+        getToolbar().setUIID("Container");
+        Button b = new Button(" ");
+        b.setUIID("Container");
+        getToolbar().setTitleComponent(b);
+        getTitleArea().setUIID("Container");
+        installSidemenu(resourceObjectInstance);
         ServicePaiment = ServicePaiment.getInstance();
         initGuiBuilderComponents(resourceObjectInstance);
         getTitleArea().setUIID("Container");
         getToolbar().setUIID("Container");
-        getToolbar().getTitleComponent().setUIID("AddFormTitle");
-        FontImage mat = FontImage.createMaterial(FontImage.MATERIAL_CLOSE, "AddFormTitle", 3.5f);
+        getToolbar().getTitleComponent().setUIID("Payer");
+        FontImage mat = FontImage.createMaterial(FontImage.MATERIAL_CLOSE, "Payer", 3.5f);
         getToolbar().addCommandToLeftBar("", mat, e -> new SplashForm().show());
-        getContentPane().setUIID("Ajouter une réclamation");
+        getContentPane().setUIID("Payer");
 
     }
 
@@ -54,13 +66,16 @@ private ServicePaiment ServicePaiment;
     private com.codename1.ui.Container gui_Container_1 = new com.codename1.ui.Container(new com.codename1.ui.layouts.BoxLayout(com.codename1.ui.layouts.BoxLayout.Y_AXIS));
     private com.codename1.ui.Label gui_Label_1 = new com.codename1.ui.Label();
     private com.codename1.ui.ComponentGroup gui_Component_Group_1 = new com.codename1.ui.ComponentGroup();
-    private com.codename1.ui.TextField numCarte = new com.codename1.ui.TextField();
-    private com.codename1.ui.TextField nomCarte = new com.codename1.ui.TextField();
-    private com.codename1.ui.TextField cvCode = new com.codename1.ui.TextField();
-    private com.codename1.ui.TextField prixTot = new com.codename1.ui.TextField();
-      private com.codename1.ui.TextField dateEx = new com.codename1.ui.TextField();
-//    private com.codename1.ui.TextField dateachatField = new com.codename1.ui.TextField();
+    public com.codename1.ui.TextField numCarte = new com.codename1.ui.TextField();
+    public com.codename1.ui.TextField nomCarte = new com.codename1.ui.TextField();
+    public com.codename1.ui.TextField cvCode = new com.codename1.ui.TextField();
+    public com.codename1.ui.TextField prixTot = new com.codename1.ui.TextField();
+
     private com.codename1.ui.Button valider = new com.codename1.ui.Button();
+
+    checkoutForm() {
+
+    }
     
 
 // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
@@ -95,45 +110,54 @@ private ServicePaiment ServicePaiment;
         }
     }
 
-    private void initGuiBuilderComponents(com.codename1.ui.util.Resources resourceObjectInstance) {
-        List<String> categoryList;
+private void initGuiBuilderComponents(com.codename1.ui.util.Resources resourceObjectInstance) {
+    List<String> categoryList;
 
-        guiBuilderBindComponentListeners();
-        setLayout(new com.codename1.ui.layouts.BorderLayout());
-        setTitle("ajouter une réclamation");
-        setName("ajouter une réclamation");
-        addComponent(com.codename1.ui.layouts.BorderLayout.CENTER, gui_Container_1);
-        gui_Container_1.setScrollableY(true);
-        gui_Container_1.setName("Container_1");
-        gui_Container_1.addComponent(gui_Label_1);
-        gui_Container_1.addComponent(gui_Component_Group_1);
+    guiBuilderBindComponentListeners();
+    setLayout(new com.codename1.ui.layouts.BorderLayout());
+    setTitle("Payer");
+    setName("Payer");
+    addComponent(com.codename1.ui.layouts.BorderLayout.CENTER, gui_Container_1);
+    gui_Container_1.setScrollableY(true);
+    gui_Container_1.setName("Container_1");
 
-        gui_Component_Group_1.setName("Component_Group_1");
+    // Create a center-aligned box layout for the container
+    gui_Container_1.setLayout(new BoxLayout(BoxLayout.Y_AXIS));
+    gui_Container_1.getStyle().setAlignment(Component.CENTER);
 
-        gui_Component_Group_1.addComponent(numCarte);
-        gui_Component_Group_1.setName("numCarte");
-        gui_Component_Group_1.addComponent(nomCarte);
-        gui_Component_Group_1.setName("nomCarte");
-        gui_Component_Group_1.addComponent(cvCode);
-        gui_Component_Group_1.setName("cvCode");
-        gui_Component_Group_1.addComponent(dateEx);
-        gui_Component_Group_1.setName("dateEx");
-        gui_Component_Group_1.addComponent(prixTot);
-        gui_Component_Group_1.setName("prixTot");
+    // Create a container to hold the text fields
+    Container fieldsContainer = new Container(new FlowLayout(Component.CENTER));
+    fieldsContainer.setName("Fields_Container");
 
+    fieldsContainer.addComponent(numCarte);
+    fieldsContainer.addComponent(nomCarte);
+    fieldsContainer.addComponent(cvCode);
 
-        numCarte.setText("numCarte");
-        nomCarte.setText("nomCarte");
-        cvCode.setText("cvCode");
-        dateEx.setText("dateEx");
-        prixTot.setText("prixTot");
-        gui_Label_1.setUIID("CenterLabel");
-        gui_Label_1.setName("Label_1");
-        gui_Component_Group_1.setName("Component_Group_1");
-         valider.setText("ADD ");
-        gui_Container_1.addComponent(valider);
+    fieldsContainer.addComponent(prixTot);
 
-    } // </editor-fold> // </editor-fold>
+    // Add the fields container to the main container
+    gui_Container_1.addComponent(fieldsContainer);
+
+    // Create a container for the button
+    Container buttonContainer = new Container(new FlowLayout(Component.CENTER));
+    buttonContainer.setName("Button_Container");
+
+    buttonContainer.addComponent(valider);
+
+    // Add the button container to the main container
+    gui_Container_1.addComponent(buttonContainer);
+
+    numCarte.setText("numCarte");
+    nomCarte.setText("nomCarte");
+    cvCode.setText("cvCode");
+    
+    prixTot.setText("prixTot");
+    gui_Label_1.setUIID("CenterLabel");
+    gui_Label_1.setName("Label_1");
+    valider.setText("Payer");
+
+}
+ // </editor-fold> // </editor-fold>
 
     public void validerActionEvent(com.codename1.ui.events.ActionEvent ev) {
         Paiment r = new Paiment();
@@ -141,19 +165,11 @@ private ServicePaiment ServicePaiment;
         r.setNomCarte(nomCarte.getText());
          r.setNumCarte(Integer.parseInt(numCarte.getText()));
         r.setCvCode(Integer.parseInt(cvCode.getText()));
-        String dateStr = dateEx.getText();
-SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Customize the date format as per your needs
-try {
-    Date date = dateFormat.parse(dateStr);
-    r.setDateEx(date);
-} catch (ParseException e) {
-    e.printStackTrace(); // Handle the parse exception if necessary
-}
-
-      
+             
 
         if (ServicePaiment.addPaiment(r)) {
-            Dialog.show("Success", "paiment added successfully", "OK", null);
+            Dialog.show("Success", "paiment a été effectué", "OK", null);
+
        
         } else {
             Dialog.show("Error", "Failed to add paiment", "OK", null);

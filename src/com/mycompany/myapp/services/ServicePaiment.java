@@ -48,7 +48,10 @@ public class ServicePaiment {
     public boolean addPaiment(Paiment paiment) {
 
       
-        String url = Statics.BASE_URL + "/paimentmobile/addpayment?nomCarte=" + paiment.getNomCarte()+ "&numCarte=" + paiment.getNumCarte()+ "&prixTot=" + paiment.getPrixTot() + "&cvCode=" + paiment.getCvCode()+ "&dateEx=" + paiment.getDateEx();
+String url = Statics.BASE_URL + "/paimentmobile/addpayment?nom_carte=" + paiment.getNomCarte()
+        + "&num_carte=" + paiment.getNumCarte()
+        + "&prix_tot=" + paiment.getPrixTot()
+        + "&CV_code=" + paiment.getCvCode();
         req.setUrl(url);
         req.setPost(false);
 

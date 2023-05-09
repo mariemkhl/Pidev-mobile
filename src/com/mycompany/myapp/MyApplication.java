@@ -14,6 +14,7 @@ import com.codename1.ui.Toolbar;
 import java.io.IOException;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.io.NetworkEvent;
+import com.mycompany.myapp.gui.CommandeForm;
 import com.mycompany.myapp.gui.checkoutForm;
 import com.mycompany.myapp.gui.conf_reclamation;
 
@@ -58,7 +59,7 @@ public class MyApplication {
             
         }
     
-     new conf_reclamation(theme).show();
+     new CommandeForm(theme).show();
  
     }
 

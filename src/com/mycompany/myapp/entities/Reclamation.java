@@ -12,18 +12,18 @@ package com.mycompany.myapp.entities;
 public class Reclamation {
     int numero;
     String Commentaire;
-    String typereclamation;
+    String typeReclamation;
 
     public Reclamation(int numero, String Commentaire, String typereclamation) {
         this.numero = numero;
         this.Commentaire = Commentaire;
-        this.typereclamation = typereclamation;
+        this.typeReclamation = typeReclamation;
     }
 
-     public Reclamation( String Commentaire, String typereclamation) {
+     public Reclamation( String Commentaire, String typeReclamation) {
        
         this.Commentaire = Commentaire;
-        this.typereclamation = typereclamation;
+        this.typeReclamation = typeReclamation;
     }
 
     public Reclamation() {
@@ -46,11 +46,11 @@ public class Reclamation {
     }
 
     public String getTypereclamation() {
-        return typereclamation;
+        return typeReclamation;
     }
 
-    public void setTypereclamation(String typereclamation) {
-        this.typereclamation = typereclamation;
+    public void setTypereclamation(String typeReclamation) {
+        this.typeReclamation = typeReclamation;
     }
     
 }

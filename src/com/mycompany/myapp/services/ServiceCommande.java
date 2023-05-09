@@ -45,7 +45,7 @@ public class ServiceCommande {
     public boolean addCommande(Commande commande) {
 
       
-        String url = Statics.BASE_URL + "/commandemobile/new?userid=" + commande.getUserid()+ "&paymente=" + commande.getPayment()+ "&prixTot=" + commande.getPrixTot() + "&date=" + commande.getDate();
+        String url = Statics.BASE_URL + "/commandemobile/new?userid=" + commande.getUserid()+ "&paymente=" + commande.getPayment()+ "&prixTot=" + commande.getPrixTot();
         req.setUrl(url);
         req.setPost(false);
         
