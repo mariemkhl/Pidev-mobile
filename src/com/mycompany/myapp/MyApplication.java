@@ -16,7 +16,7 @@ import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.io.NetworkEvent;
 import com.mycompany.myapp.gui.CommandeForm;
 import com.mycompany.myapp.gui.checkoutForm;
-import com.mycompany.myapp.gui.conf_reclamation;
+import com.mycompany.myapp.gui.confpaimentForm;
 
 import com.mycompany.myapp.gui.recForm;
 
@@ -59,7 +59,7 @@ public class MyApplication {
             
         }
     
-     new CommandeForm(theme).show();
+     new recForm(theme).show();
  
     }
 

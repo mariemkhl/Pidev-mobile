@@ -9,6 +9,7 @@ import com.codename1.ui.Component;
 import com.codename1.ui.Container;
 import com.codename1.ui.Dialog;
 import com.codename1.ui.FontImage;
+import com.codename1.ui.Label;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.FlowLayout;
 import com.mycompany.myapp.entities.Paiment;
@@ -32,7 +33,12 @@ ServicePaiment = ServicePaiment.getInstance();
         getToolbar().setUIID("Container");
         getToolbar().getTitleComponent().setUIID("Payer");
         FontImage mat = FontImage.createMaterial(FontImage.MATERIAL_CLOSE, "payer", 3.5f);
-        getToolbar().addCommandToLeftBar("", mat, e -> new SplashForm().show());
+        getToolbar().addCommandToLeftBar("", mat, e -> new checkoutForm().show());
+         getToolbar().setTitleComponent(
+                FlowLayout.encloseCenterMiddle(
+                        new Label("payer", "payer")
+                            )
+        );
         getContentPane().setUIID("payer");
         
 
@@ -144,7 +150,7 @@ private void initGuiBuilderComponents(com.codename1.ui.util.Resources resourceOb
 
         if (ServicePaiment.addPaiment(r)) {
             Dialog.show("Success", "paiment a été effectué", "OK", null);
-
+new confpaimentForm(numCarte.getText(), nomCarte.getText(), cvCode.getText(), prixTot.getText()).show();
        
         } else {
             Dialog.show("Error", "Failed to add paiment", "OK", null);

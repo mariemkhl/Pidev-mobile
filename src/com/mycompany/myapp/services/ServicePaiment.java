@@ -18,6 +18,7 @@ import com.codename1.io.NetworkEvent;
 import com.codename1.io.NetworkManager;
 import com.codename1.l10n.ParseException;
 import com.codename1.l10n.SimpleDateFormat;
+import com.codename1.ui.Dialog;
 import com.codename1.ui.events.ActionListener;
 //import java.beans.Statement;
 //import java.sql.Connection;
@@ -178,8 +179,24 @@ String url = "https://127.0.0.1:8000/Mobileproduct";
         NetworkManager.getInstance().addToQueueAndWait(req);
         return paiments;
     }
+public static void supprimerPaiment(int prixTot) {
+    String url = "https://127.0.0.1:8000/paimentmobile/remove?prixTot=" + prixTot;
+    ConnectionRequest req = new ConnectionRequest();
+    req.setUrl(url);
+    req.setHttpMethod("DELETE");
+    req.addResponseListener((NetworkEvent evt) -> {
+        int responseCode = req.getResponseCode();
+        if (responseCode == 200) {
+            // Deletion successful
+            Dialog.show("Success", "Paiment deleted successfully", "OK", null);
+        } else {
+            // Deletion failed
+            Dialog.show("Error", "Failed to delete Paiment", "OK", null);
+        }
+    });
 
-
+    NetworkManager.getInstance().addToQueueAndWait(req);
+}
 
 
 }

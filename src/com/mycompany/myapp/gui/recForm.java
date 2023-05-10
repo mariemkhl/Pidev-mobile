@@ -28,18 +28,27 @@ import com.mycompany.myapp.entities.Reclamation;
 import com.mycompany.myapp.gui.SplashForm;
 import com.mycompany.myapp.services.ServiceReclamation;
 import java.util.List;
+import com.codename1.ui.util.Resources;
+import com.mycompany.myapp.gui.Display;
+
 
 /**
  * GUI builder created Form
  *
  * @author Shai Almog
  */public class recForm extends BaseForm {
+     
+         Container imageContainer;
 
     Reclamation r = new Reclamation();
     private ServiceReclamation ServiceReclamation;
 
 
     public recForm(com.codename1.ui.util.Resources resourceObjectInstance) {
+          guiBuilderBindComponentListeners();
+    setLayout(new com.codename1.ui.layouts.BorderLayout());
+    setTitle("ajouter une réclamation");
+    setName("ajouter une réclamation");
   ServiceReclamation = ServiceReclamation.getInstance();
         initGuiBuilderComponents(resourceObjectInstance);
         getTitleArea().setUIID("Container");
@@ -59,8 +68,9 @@ import java.util.List;
     private com.codename1.ui.ComponentGroup gui_Component_Group_1 = new com.codename1.ui.ComponentGroup();
     public com.codename1.ui.TextField commentaire = new com.codename1.ui.TextField();
     public com.codename1.ui.TextField typeReclamation = new com.codename1.ui.TextField();
-    private com.codename1.ui.Button valider = new com.codename1.ui.Button();
-    private com.codename1.ui.Button confirmation = new com.codename1.ui.Button();
+    private com.codename1.ui.Button ajouter = new com.codename1.ui.Button();
+    
+   
 // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
 
     recForm() {
@@ -69,7 +79,7 @@ import java.util.List;
 // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void guiBuilderBindComponentListeners() {
         EventCallbackClass callback = new EventCallbackClass();
-        valider.addActionListener(callback);
+        ajouter.addActionListener(callback);
     }
 
     class EventCallbackClass implements com.codename1.ui.events.ActionListener, com.codename1.ui.events.DataChangedListener {
@@ -89,8 +99,8 @@ import java.util.List;
                 sourceComponent = sourceComponent.getParent().getLeadParent();
             }
 
-            if (sourceComponent == valider) {
-                validerActionEvent(ev);
+            if (sourceComponent == ajouter) {
+                ajouterActionEvent(ev);
             }
         }
 
@@ -119,6 +129,7 @@ private void initGuiBuilderComponents(com.codename1.ui.util.Resources resourceOb
 
     fieldsContainer.addComponent(commentaire);
     fieldsContainer.addComponent(typeReclamation);
+   
 
     // Add the fields container to the main container
     gui_Container_1.addComponent(fieldsContainer);
@@ -127,43 +138,40 @@ private void initGuiBuilderComponents(com.codename1.ui.util.Resources resourceOb
     Container buttonContainer = new Container(new FlowLayout(Component.CENTER));
     buttonContainer.setName("Button_Container");
 
-    buttonContainer.addComponent(valider);
-     buttonContainer.addComponent(confirmation);
+    buttonContainer.addComponent(ajouter);
+
+
 
     // Add the button container to the main container
     gui_Container_1.addComponent(buttonContainer);
 
-    commentaire.setText("commentaire");
-    typeReclamation.setText("typeReclamation");
+    commentaire.setText("c'est quoi votre problème");
+    typeReclamation.setText("dites-nous plus");
+
+    
 
     gui_Label_1.setUIID("CenterLabel");
     gui_Label_1.setName("Label_1");
-    valider.setText("ajouter votre réclamation");
-    confirmation.setText("cliquez ici pour la confirmation");
+    ajouter.setText("ajouter votre réclamation");
+
 
 }
  // </editor-fold> // </editor-fold>
 
-    public void validerActionEvent(com.codename1.ui.events.ActionEvent ev) {
-        Reclamation r = new Reclamation();
-        r.setCommentaire(commentaire.getText());
-        r.setTypereclamation(typeReclamation.getText());
+ public void ajouterActionEvent(com.codename1.ui.events.ActionEvent ev) {
+    Reclamation r = new Reclamation();
+    r.setCommentaire(commentaire.getText());
+    r.setTypereclamation(typeReclamation.getText());
 
-             
-
-        if (ServiceReclamation.addReclamation(r)) {
-            Dialog.show("Success", "reclamation a été effectué", "OK", null);
-
-       
-        } else {
-            Dialog.show("Error", "Failed to add reclamation", "OK", null);
-        }
-
+    if (ServiceReclamation.addReclamation(r)) {
+        Dialog.show("Success", "Your Reclamation has been submitted", "OK", null);
+        new Display(commentaire.getText(), typeReclamation.getText()).show();
+    } else {
+        Dialog.show("Error", "Failed to add Reclamation", "OK", null);
     }
-        public void confirmationActionEvent(com.codename1.ui.events.ActionEvent ev) {
-    conf_reclamation conf_reclamation = new conf_reclamation();
-              conf_reclamation.show();
-          }
+}
+
+
     }
 
 //-- DON'T EDIT ABOVE THIS LINE!!!
