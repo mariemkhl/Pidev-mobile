@@ -61,16 +61,17 @@ public class MyApplication {
             current.show();
             return;
         }
-        try {
-//                    new SplashForm(theme).show();
-            new AffichProducts().show();
+//        try {
+                   new SplashForm(theme).show();
+//            new AffichProducts().show();
+//            new AddProdForm().show();
 //        ServiceProduct sp= new ServiceProduct();
 //       ArrayList<Product> products=sp.affichageProduct2();
 //       hi.add(new Label(products.toString()));
 //       hi.show();
-        } catch (IOException ex) {
-            //  Logger.getLogger(MyApplication.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        } catch (IOException ex) {
+//            //  Logger.getLogger(MyApplication.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }
 
     public void stop() {

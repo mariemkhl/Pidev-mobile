@@ -5,6 +5,7 @@
  */
 package com.mycompany.services;
 
+import com.codename1.components.ImageViewer;
 import com.codename1.db.Cursor;
 import com.codename1.db.Database;
 import com.codename1.db.Row;
@@ -38,8 +39,22 @@ import java.util.Map;
 import com.codename1.io.ConnectionRequest;
 import com.codename1.io.NetworkEvent;
 import com.codename1.io.NetworkManager;
+import com.codename1.io.rest.Response;
 import com.codename1.l10n.ParseException;
+import com.codename1.ui.EncodedImage;
+import com.codename1.ui.Form;
+import com.codename1.ui.Image;
+import com.codename1.ui.Label;
+import com.codename1.ui.URLImage;
+import static com.codename1.ui.events.ActionEvent.Type.Log;
+import static com.codename1.ui.events.ActionEvent.Type.Response;
 import com.codename1.ui.events.ActionListener;
+import com.codename1.ui.layouts.BorderLayout;
+import com.codename1.ui.layouts.BoxLayout;
+import com.codename1.ui.scene.Scene;
+import com.codename1.util.Base64;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 //import java.beans.Statement;
 //import java.sql.Connection;
 //import java.sql.DriverManager;
@@ -47,6 +62,62 @@ import com.codename1.ui.events.ActionListener;
 //import java.sql.SQLException;
 
 import java.util.ArrayList;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
+
+
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
+import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
+
+
+
+
+import com.codename1.io.ConnectionRequest;
+import com.codename1.io.JSONParser;
+import com.codename1.io.NetworkEvent;
+import com.codename1.io.NetworkManager;
+import com.codename1.ui.EncodedImage;
+import com.codename1.ui.URLImage;
+import com.codename1.ui.events.ActionListener;
+import com.codename1.util.Callback;
+import com.codename1.util.regex.RE;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Map;
+
+import java.util.Map;
+import java.util.HashMap;
+
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
+import com.google.zxing.qrcode.encoder.Encoder;
+import com.google.zxing.qrcode.encoder.QRCode;
+
+
+import com.codename1.components.ScaleImageButton;
+import com.codename1.io.Util;
+
+
+
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
+
+////import java.util.EnumMap;
+import java.util.Map;
+
+
 
 public class ServiceProduct {
     private ConnectionRequest req;
@@ -109,7 +180,7 @@ public class ServiceProduct {
     
     public boolean updateProduct(Product product) {
 //    String url = Statics.BASE_URL + "/Mobileproduct/api/updateproducts/?id=" + product.getId_p() + "&nom=" + product.getNom() + "&description=" + product.getDescription() + "&prix=" + product.getPrix() + "&img=" + product.getImg() + "&categ=" + product.getCat_p() + "&user=" + product.getUser_id() + "&url=" + product.getUrl();
-    String url = "http://127.0.0.1:8000/Mobileproduct/api/updateproducts/" + product.getId_p() + "&nom=" + product.getNom() + "&description=" + product.getDescription() + "&prix=" + product.getPrix() + "&img=" + product.getImg() + "&categ=" + product.getCat_p() + "&user=" + product.getUser_id() + "&url=" + product.getUrl();
+    String url = "http://127.0.0.1:8000/Mobileproduct/api/updateproducts/" + product.getId_p() + "?nom=" + product.getNom() + "&description=" + product.getDescription() + "&prix=" + product.getPrix() + "&img=" + product.getImg() + "&categ=" + product.getCat_p() + "&user=" + product.getUser_id() + "&url=" + product.getUrl();
 
     req.setUrl(url);
     req.setPost(false);
@@ -228,6 +299,104 @@ String url = "https://127.0.0.1:8000/Mobileproduct/api/products";
         NetworkManager.getInstance().addToQueueAndWait(req);
         return products;
     }
+
+
+
+
+ 
+   public void generateQRCode(String productId, Callback<EncodedImage> callback) {
+        String url = Statics.BASE_URL + "/Mobileproduct/qr-code/" + productId;
+
+        ConnectionRequest request = new ConnectionRequest();
+        request.setUrl(url);
+        request.setPost(false);
+
+        request.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                byte[] responseData = request.getResponseData();
+                try {
+                    String json = new String(responseData, "UTF-8");
+                    JSONParser parser = new JSONParser();
+                    Map<String, Object> qrCodeData = parser.parseJSON(new InputStreamReader(new ByteArrayInputStream(responseData), "UTF-8"));
+
+                    String qrCodeImageUrl = (String) qrCodeData.get("img");
+                    // You can also access other QR code variations using qrCodeData map
+
+                    if (qrCodeImageUrl != null) {
+                        EncodedImage qrCodeImage = URLImage.createToStorage(EncodedImage.createFromImage(Image.createImage(1, 1), false),
+                                "qrCode_" + productId, qrCodeImageUrl);
+                        callback.onSucess(qrCodeImage);
+                    } else {
+//                        callback.onError("QR code URL not found in the response.");
+                    }
+                } catch (IOException ex) {
+//                    callback.onError(ex.getMessage());
+                }
+            }
+        });
+
+        NetworkManager.getInstance().addToQueue(request);
+    }
+
+
+public double convertToEuros(double priceInDinars) {
+    // Conversion logic from dinars to euros
+    double conversionRate = 0.0095; // Replace with the actual conversion rate
+    return priceInDinars * conversionRate;
+}
+
+//
+//private Image generateQRCode(String data, int size, int margin) {
+//    try {
+//        // Generate the QR code using the provided data, size, and margin
+//        byte[] qrCodeBytes = Util.getQRCode(data, size, size, margin);
+//        Image qrCodeImage = Image.createImage(qrCodeBytes, 0, qrCodeBytes.length);
+//
+//        return qrCodeImage;
+//    } catch (Exception e) {
+//        e.printStackTrace();
+//        return null;
+//    }
+//}
+
+   
+//  public byte[] generateQRCode(String data, int size, int margin) throws WriterException, IOException {
+//    Map<EncodeHintType, Object> hints = new HashMap<>();
+//    hints.put(EncodeHintType.MARGIN, margin);
+//
+//    QRCode qrCode = Encoder.encode(data, ErrorCorrectionLevel.L, hints);
+//    int qrCodeWidth = qrCode.getMatrix().getWidth();
+//    BufferedImage image = new BufferedImage(qrCodeWidth, qrCodeWidth, BufferedImage.TYPE_INT_RGB);
+//    image.createGraphics();
+//
+//    Graphics2D graphics = (Graphics2D) image.getGraphics();
+//    graphics.setColor(Color.WHITE);
+//    graphics.fillRect(0, 0, qrCodeWidth, qrCodeWidth);
+//    graphics.setColor(Color.BLACK);
+//
+//    for (int x = 0; x < qrCodeWidth; x++) {
+//        for (int y = 0; y < qrCodeWidth; y++) {
+//            if (qrCode.getMatrix().get(x, y)) {
+//                graphics.fillRect(x, y, 1, 1);
+//            }
+//        }
+//    }
+//
+//    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//    ImageIO.write(image, "png", baos);
+//    baos.flush();
+//    byte[] qrCodeImageBytes = baos.toByteArray();
+//    baos.close();
+//
+//    return qrCodeImageBytes;
+//}
+
+   
+
+
+
+
 
 
 

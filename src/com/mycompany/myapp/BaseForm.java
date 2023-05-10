@@ -27,6 +27,8 @@ import com.codename1.ui.Label;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.FlowLayout;
 import com.codename1.ui.util.Resources;
+import java.io.IOException;
+
 //import com.codename1.uikit.pheonixui.CalendarForm;
 //import com.codename1.uikit.pheonixui.InboxForm;
 //import com.codename1.uikit.pheonixui.StatsForm;
@@ -66,8 +68,15 @@ public class BaseForm extends Form {
 //        getToolbar().addCommandToSideMenu("Stats", statsImage, e -> new StatsForm(res).show());
         getToolbar().addCommandToSideMenu("Calendar", calendarImage, e -> new CalendarForm(res).show());
         getToolbar().addCommandToSideMenu("Map", null, e -> {});
-        getToolbar().addCommandToSideMenu("Trending", trendingImage, e -> new TrendingForm(res).show());
-        getToolbar().addCommandToSideMenu("Settings", null, e -> {});
+        getToolbar().addCommandToSideMenu("Products", trendingImage, e -> {
+            try {
+                new AffichProducts().show();
+            } catch (IOException ex) {
+//                Logger.getLogger(BaseForm.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+        getToolbar().addCommandToSideMenu("Adding Products", trendingImage, e -> new AddProdForm(res).show());
+        getToolbar().addCommandToSideMenu("Adding Categorys", trendingImage, e -> new DetailsForm().show());
         
         // spacer
         getToolbar().addComponentToSideMenu(new Label(" ", "SideCommand"));

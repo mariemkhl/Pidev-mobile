@@ -30,12 +30,14 @@ import com.codename1.ui.layouts.FlowLayout;
 import com.codename1.ui.util.Effects;
 import com.codename1.ui.util.UITimer;
 
+
 /**
  * GUI builder created Form
  *
  * @author shai
  */
 public class SplashForm extends com.codename1.ui.Form {
+
 
     public SplashForm() {
         this(com.codename1.ui.util.Resources.getGlobalResources());
@@ -51,6 +53,7 @@ public class SplashForm extends com.codename1.ui.Form {
         Image logoImage = Effects.dropshadow(resourceObjectInstance.getImage("logo.png"), 10, 70, size, size);
         gui_Label_1.setIcon(logoImage);
         UITimer.timer(3000, false, this, () -> new WalkthruForm(resourceObjectInstance).show());
+       
     }
 
 //-- DON'T EDIT BELOW THIS LINE!!!
@@ -58,7 +61,7 @@ public class SplashForm extends com.codename1.ui.Form {
     private com.codename1.ui.Container gui_Container_2 = new com.codename1.ui.Container(new com.codename1.ui.layouts.FlowLayout());
     private com.codename1.components.InfiniteProgress gui_Infinite_Progress_1 = new com.codename1.components.InfiniteProgress();
     private com.codename1.ui.Label gui_Label_1 = new com.codename1.ui.Label();
-
+    private com.codename1.ui.Button gui_Button =new com.codename1.ui.Button();
 
 // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initGuiBuilderComponents(com.codename1.ui.util.Resources resourceObjectInstance) {
@@ -80,7 +83,18 @@ public class SplashForm extends com.codename1.ui.Form {
         gui_Label_1.setName("Label_1");
         gui_Label_1.setIcon(resourceObjectInstance.getImage("logo.png"));
         gui_Container_1.setName("Container_1");
+        
+          gui_Button.setText("Go to Acceuil");
+        gui_Button.addActionListener(e -> goToAcceuil());
+        gui_Container_1.addComponent(gui_Button);
+       
     }// </editor-fold>
 
+    
+    private void goToAcceuil() {
+    InboxForm acceuilForm = new InboxForm();
+    acceuilForm.show();
+}
+    
 //-- DON'T EDIT ABOVE THIS LINE!!!
 }

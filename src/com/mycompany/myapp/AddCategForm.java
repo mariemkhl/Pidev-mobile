@@ -1,22 +1,34 @@
 /*
- * Copyright (c) 2016, Codename One
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
- * documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
- * the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, 
- * and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all copies or substantial portions 
- * of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, 
- * INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A 
- * PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT 
- * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF 
- * CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE 
- * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
 package com.mycompany.myapp;
+
+import com.codename1.ui.Button;
+import com.codename1.ui.Container;
+import com.codename1.ui.Dialog;
+import com.codename1.ui.Display;
+import com.codename1.ui.EncodedImage;
+import com.codename1.ui.FontImage;
+import com.codename1.ui.Label;
+import com.codename1.ui.URLImage;
+import com.codename1.ui.events.ActionEvent;
+import com.codename1.ui.layouts.BorderLayout;
+import com.codename1.ui.layouts.BoxLayout;
+import com.codename1.ui.plaf.Border;
+import com.mycompany.entity.Category;
+import com.mycompany.entity.Product;
+import com.mycompany.services.ServiceCategory;
+import com.mycompany.services.ServiceProduct;
+import java.io.IOException;
+import java.util.List;
+
+
+
+
+
+
 
 import com.codename1.io.ConnectionRequest;
 import com.codename1.io.FileSystemStorage;
@@ -57,21 +69,19 @@ import com.codename1.io.ConnectionRequest;
 import com.codename1.io.FileSystemStorage;
 import com.codename1.io.NetworkEvent;
 import com.codename1.io.Util;
+import com.codename1.ui.Command;
 import com.codename1.ui.Dialog;
 
 import com.codename1.util.StringUtil;
 
 
-
 /**
- * GUI builder created Form
  *
- * @author Shai Almog
+ * @author Nour Benkairia
  */
-public class AddProdForm extends com.codename1.ui.Form {
-
-    Product p = new Product();
-    private ServiceProduct serviceProduct;
+public class AddCategForm {
+        Category c = new Category();
+    private ServiceCategory serviceCategory;
     private String imageUrl;
     private Container imageContainer;
     private Button imgs;
@@ -80,20 +90,20 @@ public class AddProdForm extends com.codename1.ui.Form {
     Label imageNameLabel = new Label();
 
     
-    public AddProdForm() {
+    public AddCategForm() {
         this(com.codename1.ui.util.Resources.getGlobalResources());
 
     }
 
-    public AddProdForm(com.codename1.ui.util.Resources resourceObjectInstance) {
-        serviceProduct = ServiceProduct.getInstance();
-        initGuiBuilderComponents(resourceObjectInstance);
-        getTitleArea().setUIID("Container");
-        getToolbar().setUIID("Container");
-        getToolbar().getTitleComponent().setUIID("AddFormTitle");
-        FontImage mat = FontImage.createMaterial(FontImage.MATERIAL_CLOSE, "AddFormTitle", 3.5f);
-        getToolbar().addCommandToLeftBar("", mat, e -> new SplashForm().show());
-        getContentPane().setUIID("AddProduct");
+    public AddCategForm(com.codename1.ui.util.Resources resourceObjectInstance) {
+        serviceCategory = serviceCategory.getInstance();
+          initGuiBuilderComponents(resourceObjectInstance);
+       
+//        getToolbar().setUIID("Container");
+//        getToolbar().getTitleComponent().setUIID("AddFormTitle");
+//        FontImage mat = FontImage.createMaterial(FontImage.MATERIAL_CLOSE, "AddFormTitle", 3.5f);
+//        getToolbar().addCommandToLeftBar("", mat, e -> new SplashForm().show());
+//        getContentPane().setUIID("AddProduct");
         
     }
     
@@ -147,13 +157,9 @@ private void showImage(String fileUrl) {
     private com.codename1.ui.Label gui_Label_1 = new com.codename1.ui.Label();
     private com.codename1.ui.ComponentGroup gui_Component_Group_1 = new com.codename1.ui.ComponentGroup();
     private com.codename1.ui.TextField prodnameField = new com.codename1.ui.TextField();
-    private com.codename1.ui.TextField descripField = new com.codename1.ui.TextField();
-    private com.codename1.ui.TextField priceField = new com.codename1.ui.TextField();
+    
     private com.codename1.ui.TextField prodImgField = new com.codename1.ui.TextField();
-    private com.codename1.ui.TextField CategoryField = new com.codename1.ui.TextField();
-    private com.codename1.ui.TextField userField = new com.codename1.ui.TextField();
-    private com.codename1.ui.TextField urlField = new com.codename1.ui.TextField();
-//    private com.codename1.ui.TextField dateachatField = new com.codename1.ui.TextField();
+    
     private com.codename1.ui.Button gui_Button_2 = new com.codename1.ui.Button();
     private com.codename1.ui.Button gui_Button_3 = new com.codename1.ui.Button();
     private com.codename1.ui.Button gui_Button_1 = new com.codename1.ui.Button();
@@ -164,6 +170,8 @@ private void showImage(String fileUrl) {
         EventCallbackClass callback = new EventCallbackClass();
         gui_Button_2.addActionListener(callback);
     }
+
+//   
 
     class EventCallbackClass implements com.codename1.ui.events.ActionListener, com.codename1.ui.events.DataChangedListener {
 
@@ -199,10 +207,10 @@ private void showImage(String fileUrl) {
         List<String> categoryList;
 
         guiBuilderBindComponentListeners();
-        setLayout(new com.codename1.ui.layouts.BorderLayout());
-        setTitle("ADD Product");
-        setName("Add ProductForm");
-        addComponent(com.codename1.ui.layouts.BorderLayout.CENTER, gui_Container_1);
+//        setLayout(new com.codename1.ui.layouts.BorderLayout());
+//        setTitle("ADD Product");
+//        setName("Add ProductForm");
+//        addComponent(com.codename1.ui.layouts.BorderLayout.CENTER, gui_Container_1);
         gui_Container_1.setScrollableY(true);
         gui_Container_1.setName("Container_1");
         gui_Container_1.addComponent(gui_Label_1);
@@ -212,10 +220,7 @@ private void showImage(String fileUrl) {
 
         gui_Component_Group_1.addComponent(prodnameField);
         gui_Component_Group_1.setName("prodnameField");
-        gui_Component_Group_1.addComponent(descripField);
-        gui_Component_Group_1.setName("descripField");
-        gui_Component_Group_1.addComponent(priceField);
-        gui_Component_Group_1.setName("priceField");
+    
         gui_Component_Group_1.addComponent(prodImgField);
         gui_Component_Group_1.setName("prodImgField");
 
@@ -267,33 +272,11 @@ gui_Container_1.addComponent(selectImageButton);
 //        gui_Container_1.addComponent(chooseImageButton);
         gui_Container_1.addComponent(imageContainer);
 
-        gui_Component_Group_1.addComponent(CategoryField);
-        gui_Component_Group_1.setName("CategoryField");
+      
 
-//   categoryList = ServiceProduct.getInstance().getCategoriesFromDatabase();
-//        
-//
-//ComboBox<String> categoryComboBox = new ComboBox<>();
-//for (String category : categoryList) {
-//    categoryComboBox.addItem(category);
-//}
-//
-//
-//gui_Component_Group_1.addComponent(categoryComboBox);
-//gui_Component_Group_1.setName("CategoryField");
-        gui_Component_Group_1.addComponent(userField);
-        gui_Component_Group_1.setName("userField");
-        gui_Component_Group_1.addComponent(urlField);
-        gui_Component_Group_1.setName("urlField");
-//        gui_Component_Group_1.addComponent(dateA);
 
-        prodnameField.setText("Product Name");
-        descripField.setText("Description");
-        priceField.setText("price");
-        CategoryField.setText("category");
-        userField.setText("user");
-        urlField.setText("Url");
-//        dateAchatField.setText("dateA");
+        prodnameField.setText("Category Name");
+       
         prodImgField.setText("Img");
         gui_Container_1.addComponent(gui_Button_2);
         gui_Container_1.addComponent(gui_Button_3);
@@ -330,8 +313,7 @@ gui_Container_1.addComponent(viewProductsButton);
          // Create a new Product object
     Product product = new Product();
     product.setNom(prodnameField.getText());
-    product.setDescription(descripField.getText());
-    product.setPrix(Double.parseDouble(priceField.getText()));
+  
 
     // Get the image name from the prodImgField
     String imageName = prodImgField.getText();
@@ -339,34 +321,18 @@ gui_Container_1.addComponent(viewProductsButton);
     // Set the image name in the product object
     product.setImg(imageName);
 
-    product.setCat_p(CategoryField.getText());
-    product.setUser_id(Integer.parseInt(userField.getText()));
-    product.setUrl(urlField.getText());
+   
 
     // Call the addProduct() method from the ServiceProduct class
-    if (serviceProduct.addProduct(product)) {
-        Dialog.show("Success", "Product added successfully", "OK", null);
+    if (serviceCategory.addCategory(c)) {
+        Dialog.show("Success", "Catgeory added successfully", "OK", null);
 
-        AffichProducts affichProducts = new AffichProducts();
-        affichProducts.show();
+//        AffichProducts affichProducts = new AffichProducts();
+//        affichProducts.show();
     } else {
-        Dialog.show("Error", "Failed to add product", "OK", null);
+        Dialog.show("Error", "Failed to add Category", "OK", null);
     }
     }
     
     
-
-    
-    
-
-    
-    
-
-
-    
-
-//-- DON'T EDIT ABOVE THIS LINE!!!
-//    public void onButton_2ActionEvent(com.codename1.ui.events.ActionEvent ev) {
-//        new InboxForm().show();
-//    }
 }

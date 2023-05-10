@@ -7,6 +7,7 @@ package com.mycompany.myapp;
     
 import com.codename1.components.ImageViewer;
 import com.codename1.components.MultiButton;
+import com.codename1.components.ScaleImageButton;
 import com.codename1.components.SpanLabel;
 import com.codename1.ui.Container;
 import com.codename1.ui.EncodedImage;
@@ -25,12 +26,77 @@ import java.util.ArrayList;
 import com.codename1.ui.Button;
 import com.codename1.ui.ComponentGroup;
 import com.codename1.ui.Dialog;
+import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.layouts.FlowLayout;
+import com.codename1.util.Callback;
+
+
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
+import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
+
+
+import com.codename1.ui.Image;
+import com.codename1.ui.EncodedImage;
+import com.codename1.ui.Dialog;
+//import com.codename1.ui.ImageView;
+import com.codename1.ui.events.ActionEvent;
+import com.codename1.ui.Button;
+import com.codename1.ui.Container;
+import com.codename1.ui.layouts.FlowLayout;
+import com.codename1.ui.layouts.GridLayout;
+import javafx.scene.image.ImageView;
 
 
 
-//import java.util.logging.Level;
-//import java.util.logging.Logger;
+
+
+
+
+import com.codename1.components.ScaleImageButton;
+import com.codename1.ui.Button;
+import com.codename1.ui.Container;
+import com.codename1.ui.Dialog;
+import com.codename1.ui.Form;
+import com.codename1.ui.Graphics;
+import com.codename1.ui.Image;
+import com.codename1.ui.Label;
+import com.codename1.ui.layouts.BorderLayout;
+import com.codename1.ui.layouts.BoxLayout;
+import com.codename1.ui.layouts.FlowLayout;
+import com.codename1.ui.layouts.GridLayout;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.common.ByteMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Hashtable;
+
+
+
+
+
+import com.codename1.ui.Image;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
+import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
+import java.util.Hashtable;
+import java.util.Map;
+
+
 
 /**
  *
@@ -67,46 +133,6 @@ public class AffichProducts extends Form{
 
 
 
- 
-
-
-//        //custom
-//        this.setLayout(BoxLayout.y());
-//        this.setTitle("All Products");
-//        this.getToolbar().addMaterialCommandToLeftBar("", FontImage.MATERIAL_ARROW_BACK, (evt) -> {
-////            new HomeForm().showBack();
-//        });
-//
-//        //widgets
-//        SpanLabel sl = new SpanLabel();
-//        sl.setText(sp.affichageProduct2().toString());
-//
-//        //end
-//        this.add(sl);
-
-
-// Custom phone design layout
-this.setLayout(new BorderLayout());
-this.setTitle("All Products");
-this.getToolbar().addMaterialCommandToLeftBar("", FontImage.MATERIAL_ARROW_BACK, (evt) -> {
-    // Handle back button action
-});
-
-//        //custom
-//        this.setLayout(BoxLayout.y());
-//        this.setTitle("All Products");
-//        this.getToolbar().addMaterialCommandToLeftBar("", FontImage.MATERIAL_ARROW_BACK, (evt) -> {
-////            new HomeForm().showBack();
-//        });
-//
-//        //widgets
-//        SpanLabel sl = new SpanLabel();
-//        sl.setText(sp.affichageProduct2().toString());
-//
-//        //end
-//        this.add(sl);
-
-
 // Custom phone design layout
 this.setLayout(new BorderLayout());
 this.setTitle("All Products");
@@ -134,80 +160,104 @@ for (Product product : products) {
     Label imageLabel = new Label(image.scaled(150, 170));
     multiButton.setIcon(imageLabel.getIcon());
 
+ 
+//    // Create the QR code button
+//            Button qrCodeButton = new Button("Generate QR Code");
+//            qrCodeButton.addActionListener(e -> {
+//                String url = product.getUrl(); // Get the URL field value for the product
+//                Image qrCodeImage = generateQRCode(url, 200, 4); // Generate QR code based on the URL
+//
+//                if (qrCodeImage != null) {
+//                    // Display the QR code image in a dialog or any other UI component
+//                    Dialog qrCodeDialog = new Dialog("QR Code");
+//                    qrCodeDialog.setLayout(new BorderLayout());
+//                    qrCodeDialog.add(BorderLayout.CENTER, new ScaleImageButton(qrCodeImage));
+//                    qrCodeDialog.show();
+//                } else {
+//                    Dialog.show("Error", "Failed to generate QR code", "OK", null);
+//                }
+//            });
+//
+//            Container qrCodeButtonContainer = FlowLayout.encloseCenter(qrCodeButton);
+
+    
+    
+    
     // Add the update button
-//    Button updateButton = new Button("Update");
-//    updateButton.addActionListener(e -> {
-//        // Handle update button action
-//        UpdateProdForm updateForm = new UpdateProdForm(product);
-//        updateForm.show();
-//    });
-//    productContainer.add(updateButton);
-
-Button updateButton = new Button("Update");
-updateButton.addActionListener(e -> {
-    // Handle update button action
-    UpdateProdForm updateForm = new UpdateProdForm(product);
-    updateForm.show();
-});
-updateButton.setUIID("UpdateButton"); // Set a custom UIID for styling purposes
-Container updateButtonContainer = FlowLayout.encloseCenter(updateButton);
-productContainer.add(updateButtonContainer);
-
+    Button updateButton = new Button("Update");
+    updateButton.addActionListener(e -> {
+        // Handle update button action
+        UpdateProdForm updateForm = new UpdateProdForm(product);
+        updateForm.show();
+    });
+    updateButton.setUIID("UpdateButton"); // Set a custom UIID for styling purposes
+    Container updateButtonContainer = FlowLayout.encloseCenter(updateButton);
 
     // Add the delete button
-   Button deleteButton = new Button("Delete");
-deleteButton.addActionListener(e -> {
-    // Handle delete button action
-    boolean deleted = sp.deleteProduct(product.getId_p());
-    if (deleted) {
-        productContainer.removeComponent(multiButton);
-        productContainer.removeComponent(updateButton);
-        productContainer.removeComponent(deleteButton);
-        productContainer.revalidate();
-        Dialog.show("Success", "Product deleted successfully", "OK", null);
-    } else {
-        Dialog.show("Error", "Failed to delete product", "OK", null);
-    }
-});
-productContainer.add(FlowLayout.encloseRightMiddle(deleteButton));
+    Button deleteButton = new Button("Delete");
+    deleteButton.addActionListener(e -> {
+        // Handle delete button action
+        boolean deleted = sp.deleteProduct(product.getId_p());
+        if (deleted) {
+            productContainer.removeComponent(multiButton);
+            productContainer.removeComponent(updateButtonContainer);
+            productContainer.removeComponent(deleteButton.getParent());
+            productContainer.revalidate();
+            Dialog.show("Success", "Product deleted successfully", "OK", null);
+        } else {
+            Dialog.show("Error", "Failed to delete product", "OK", null);
+        }
+    });
+    Container deleteButtonContainer = FlowLayout.encloseCenter(deleteButton);
 
-    // Add the MultiButton to the productContainer
-    productContainer.add(multiButton);
+    Button convertButton = new Button("Convert To Euros");
+    convertButton.addActionListener(e -> {
+        double convertedPrice = sp.convertToEuros(product.getPrix());
+        Dialog.show("Conversion", "Price in Euros: " + convertedPrice, "OK", null);
+    });
+    Container convertButtonContainer = FlowLayout.encloseCenter(convertButton);
+
+    // Create a Container to hold the buttons for each product
+            Container buttonContainer = new Container();
+            buttonContainer.setLayout(new GridLayout(1, 3));
+//            buttonContainer.add(qrCodeButtonContainer);
+            buttonContainer.add(updateButtonContainer);
+            buttonContainer.add(deleteButtonContainer);
+            buttonContainer.add(convertButtonContainer);
+
+            // Create a Container to hold the MultiButton and buttonContainer
+            Container productLayout = new Container();
+            productLayout.setLayout(new BorderLayout());
+            productLayout.add(BorderLayout.CENTER, multiButton);
+            productLayout.add(BorderLayout.SOUTH, buttonContainer);
+
+            // Add the productLayout to the productContainer
+            productContainer.add(productLayout);
+
+  
+
 }
 
 // Add the productContainer to the form
 this.add(BorderLayout.CENTER, productContainer);
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-    }
-
 }
     
+
     
+
+
+
+
+
+
+
+
+
+    
+    
+}
     
     
     
